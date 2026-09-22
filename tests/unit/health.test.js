@@ -1,23 +1,27 @@
-'use strict';
+"use strict";
 
-const { healthPayload } = require('../../src/routes/health');
+const { healthPayload } = require("../../src/routes/health");
 
-describe('health payload', () => {
-  test('reports the ok status', () => {
-    expect(healthPayload()).toEqual({ status: 'ok' });
+describe("health payload", () => {
+  test("reports the ok status", () => {
+    expect(healthPayload()).toEqual({ status: "ok" });
   });
 
   test('serialises to exactly {"status":"ok"}', () => {
     expect(JSON.stringify(healthPayload())).toBe('{"status":"ok"}');
   });
 
-  test('returns a fresh object on every call', () => {
+  test("returns a fresh object on every call", () => {
     const first = healthPayload();
     const second = healthPayload();
 
     expect(first).not.toBe(second);
 
-    first.status = 'tampered';
-    expect(second.status).toBe('ok');
+    first.status = "tampered";
+    expect(second.status).toBe("ok");
+  });
+
+  test("deliberate failure for safety gate", () => {
+    expect(true).toBe(false);
   });
 });
